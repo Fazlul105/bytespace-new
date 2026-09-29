@@ -13,6 +13,14 @@ export default function CourseCard({
   return (
     <article className="course-card" aria-hidden={decorative || undefined}>
       <div className="course-image">
+        {!decorative && !onSelect && (
+          <a
+            className="course-image-link"
+            href={`/courses/${course.id}`}
+            aria-label={`Open ${course.title}`}
+            tabIndex={-1}
+          />
+        )}
         <img
           src={`/assets/${course.image}`}
           alt={decorative ? '' : course.alt}
@@ -30,13 +38,20 @@ export default function CourseCard({
         <h3>
           {decorative ? (
             course.title
-          ) : (
+          ) : onSelect ? (
             <button
               onClick={() => onSelect?.(course)}
               aria-label={`View ${course.title}`}
             >
               {course.title}
             </button>
+          ) : (
+            <a
+              href={`/courses/${course.id}`}
+              aria-label={`View ${course.title}`}
+            >
+              {course.title}
+            </a>
           )}
         </h3>
         <span className="course-rating" aria-label="Rated 4.5 out of 5">
@@ -44,7 +59,12 @@ export default function CourseCard({
         </span>
       </div>
       <p className="course-author">
-        by <span>purepearl studio</span>
+        by{' '}
+        {decorative ? (
+          <span>purepearl studio</span>
+        ) : (
+          <a href="/creators/purepearl-studio">purepearl studio</a>
+        )}
       </p>
       <div className="course-students">
         <span className="level">

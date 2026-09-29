@@ -1,0 +1,15 @@
+.site-header-dark .desktop-nav a,
+.site-header-dark .header-actions a {
+  color: #242528;
+}
+.site-header-dark .desktop-nav a:hover,
+.site-header-dark .header-actions a:hover {
+  color: var(--blue);
+}
+.site-header-dark .mobile-menu-toggle {
+  color: var(--blue);
+  border-color: var(--border);
+}
+.site-header .mobile-nav {
+  color: #fff;
+}

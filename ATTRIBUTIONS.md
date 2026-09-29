@@ -10,11 +10,11 @@ The supplied desktop reference guides the visual layout. Responsive behavior and
 
 ## Typography
 
-| Font          | Source                                                                     | Usage and license reference                                                                                                                 |
-| ------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| Satoshi       | [Official Fontshare family](https://www.fontshare.com/fonts/satoshi)       | Main interface typography. See [Fontshare licenses](https://www.fontshare.com/licenses).                                                    |
-| Clash Display | [Official Fontshare family](https://www.fontshare.com/fonts/clash-display) | ByteSpace wordmark. See [Fontshare licenses](https://www.fontshare.com/licenses).                                                           |
-| Poppins       | [Google Fonts family](https://fonts.google.com/specimen/Poppins)           | Selected numerical displays. Licensed under the [SIL Open Font License 1.1](https://github.com/google/fonts/blob/main/ofl/poppins/OFL.txt). |
+| Font          | Source                                                                     | Usage and license reference                                                                                                                     |
+| ------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Satoshi       | [Official Fontshare family](https://www.fontshare.com/fonts/satoshi)       | Main interface typography. See [Fontshare licenses](https://www.fontshare.com/licenses).                                                        |
+| Clash Display | [Official Fontshare family](https://www.fontshare.com/fonts/clash-display) | ByteSpace wordmark. See [Fontshare licenses](https://www.fontshare.com/licenses).                                                               |
+| Poppins       | [Google Fonts family](https://fonts.google.com/specimen/Poppins)           | Headings and numerical displays. Licensed under the [SIL Open Font License 1.1](https://github.com/google/fonts/blob/main/ofl/poppins/OFL.txt). |
 
 The project serves these font files locally. Font files remain subject to their respective licenses; the source design attribution does not replace those terms.
 

@@ -1,13 +1,10 @@
 import { useRef, useState } from 'react'
-import type { FormEvent } from 'react'
 import { courses, categoryRows } from '../data/courses'
-import type { Course } from '../data/courses'
-import Brand from './Brand'
+import SiteHeader from './SiteHeader'
 import Icon from './Icon'
 import type { IconName } from './Icon'
 import CourseCard from './CourseCard'
 import { Ornaments, ProgressCard, StudentCard } from './Visuals'
-import Modal from './Modal'
 import Footer from './Footer'
 
 const learningPaths: [string, IconName][] = [
@@ -42,35 +39,20 @@ const testimonials = [
   },
 ]
 export default function HomePage() {
-  const [menuOpen, setMenuOpen] = useState(false)
   const [category, setCategory] = useState('Featured')
   const [showMore, setShowMore] = useState(false)
   const [query, setQuery] = useState('')
-  const [search, setSearch] = useState('')
-  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null)
   const resultsRef = useRef<HTMLDivElement>(null)
   const filtered = courses.filter(
-    (course) =>
-      (category === 'Featured' || course.categories.includes(category)) &&
-      `${course.title} ${course.categories.join(' ')} purepearl studio`
-        .toLowerCase()
-        .includes(search.toLowerCase()),
+    (course) => category === 'Featured' || course.categories.includes(category),
   )
   function selectCategory(next: string, scroll = false) {
     setCategory(next)
-    setSearch('')
     setQuery('')
     if (scroll) {
       resultsRef.current?.scrollIntoView({ block: 'start' })
       resultsRef.current?.focus({ preventScroll: true })
     }
-  }
-  function submitSearch(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setSearch(query.trim())
-    setCategory('Featured')
-    resultsRef.current?.scrollIntoView({ block: 'start' })
-    resultsRef.current?.focus({ preventScroll: true })
   }
   return (
     <>
@@ -79,59 +61,7 @@ export default function HomePage() {
       </a>
       <main id="main">
         <section className="hero blue-grid" aria-labelledby="hero-title">
-          <header
-            className="header container"
-            onKeyDown={(event) => {
-              if (menuOpen && event.key === 'Escape') {
-                setMenuOpen(false)
-                event.currentTarget
-                  .querySelector<HTMLButtonElement>('.mobile-menu-toggle')
-                  ?.focus()
-              }
-            }}
-          >
-            <Brand light />
-            <nav className="desktop-nav" aria-label="Main navigation">
-              <a href="#home">Home</a>
-              <a href="#courses">Courses</a>
-              <a href="#creators">Creators</a>
-            </nav>
-            <div className="header-actions">
-              <a href="/login">Sign In</a>
-              <a href="/signup">Join Us</a>
-              <a href="/login" aria-label="Your courses">
-                <Icon name="bag" />
-              </a>
-            </div>
-            <button
-              className="mobile-menu-toggle"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-nav"
-            >
-              <Icon name={menuOpen ? 'close' : 'menu'} />
-            </button>
-            {menuOpen && (
-              <nav
-                id="mobile-nav"
-                className="mobile-nav"
-                aria-label="Mobile navigation"
-              >
-                <a href="#home" onClick={() => setMenuOpen(false)}>
-                  Home
-                </a>
-                <a href="#courses" onClick={() => setMenuOpen(false)}>
-                  Courses
-                </a>
-                <a href="#creators" onClick={() => setMenuOpen(false)}>
-                  Creators
-                </a>
-                <a href="/login">Sign In</a>
-                <a href="/signup">Join Us</a>
-              </nav>
-            )}
-          </header>
+          <SiteHeader light />
           <div id="home" className="hero-copy container">
             <h1 id="hero-title" tabIndex={-1}>
               Get Access to Hundreds <br />
@@ -141,7 +71,7 @@ export default function HomePage() {
               Unlock your creativity, gain valuable knowledge, and grow your
               business with our wide range of courses.
             </p>
-            <form className="hero-search" role="search" onSubmit={submitSearch}>
+            <form className="hero-search" role="search" action="/search">
               <label className="search-input">
                 <span className="sr-only">
                   Search courses, topics, or creators
@@ -149,6 +79,7 @@ export default function HomePage() {
                 <Icon name="search" />
                 <input
                   type="search"
+                  name="q"
                   placeholder="Course, topic, creator"
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
@@ -268,18 +199,12 @@ export default function HomePage() {
             aria-label="Course results"
           >
             <p
-              className={
-                category !== 'Featured' || search ? 'result-summary' : 'sr-only'
-              }
+              className={category !== 'Featured' ? 'result-summary' : 'sr-only'}
               role="status"
             >
               {filtered.length} {filtered.length === 1 ? 'course' : 'courses'}
-              {search
-                ? ` for “${search}”`
-                : category !== 'Featured'
-                  ? ` in ${category}`
-                  : ' available'}
-              {(category !== 'Featured' || search) && (
+              {category !== 'Featured' ? ` in ${category}` : ' available'}
+              {category !== 'Featured' && (
                 <button
                   className="text-button"
                   onClick={() => selectCategory('Featured')}
@@ -291,11 +216,7 @@ export default function HomePage() {
             {filtered.length ? (
               <div className="course-grid">
                 {filtered.map((course) => (
-                  <CourseCard
-                    key={course.id}
-                    course={course}
-                    onSelect={setSelectedCourse}
-                  />
+                  <CourseCard key={course.id} course={course} />
                 ))}
               </div>
             ) : (
@@ -521,42 +442,6 @@ export default function HomePage() {
         </section>
       </main>
       <Footer onCategory={(name) => selectCategory(name, true)} />
-      {selectedCourse && (
-        <Modal
-          title={selectedCourse.title}
-          onClose={() => setSelectedCourse(null)}
-        >
-          <img
-            className="modal-course-image"
-            src={`/assets/${selectedCourse.image}`}
-            alt={selectedCourse.alt}
-          />
-          <p>{selectedCourse.description}</p>
-          <dl className="course-facts">
-            <div>
-              <dt>Level</dt>
-              <dd>Beginner</dd>
-            </div>
-            <div>
-              <dt>Lessons</dt>
-              <dd>17</dd>
-            </div>
-            <div>
-              <dt>Duration</dt>
-              <dd>2 hours 16 mins</dd>
-            </div>
-          </dl>
-          <p className="modal-price">
-            <strong>$25</strong> / lifetime
-          </p>
-          <a className="button" href="/signup">
-            Start learning
-          </a>
-          <p className="modal-note">
-            Course preview. Enrollment and payments are not connected.
-          </p>
-        </Modal>
-      )}
     </>
   )
 }

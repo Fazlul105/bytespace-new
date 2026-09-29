@@ -73,7 +73,8 @@
   white-space: nowrap;
   color: #000;
 }
-.course-title-row h3 button {
+.course-title-row h3 button,
+.course-title-row h3 a {
   display: block;
   width: 100%;
   padding: 0;
@@ -86,7 +87,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.course-title-row h3 button:hover {
+.course-title-row h3 button:hover,
+.course-title-row h3 a:hover {
   color: var(--blue);
 }
 .course-rating {
@@ -108,7 +110,8 @@
   font-size: 12px;
   line-height: 19px;
 }
-.course-author span {
+.course-author span,
+.course-author a {
   color: var(--blue);
 }
 .course-students {
@@ -604,7 +607,8 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 40px;
 }
-.course-card:has(button:focus-visible) {
+.course-card:has(button:focus-visible),
+.course-card:has(a:focus-visible) {
   outline: 3px solid var(--blue);
   outline-offset: 4px;
 }
@@ -2023,4 +2027,14 @@
   .stats {
     gap: 16px;
   }
+}
+
+.course-image-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+.course-author a:hover {
+  text-decoration: underline;
 }

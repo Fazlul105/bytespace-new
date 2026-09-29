@@ -7,11 +7,11 @@ const information: Record<string, string> = {
     'Interested in sharing your knowledge? Explore the creator section and discover how ByteSpace brings learners and creators together. Affiliate registration is not available in this preview.',
   Contact:
     'This is a ByteSpace website preview. A customer support service is not connected. You can explore the featured courses or visit the sign-up page to try the form.',
-  Help: 'Search for a course, choose a category, or select a course card to see its preview. Use Sign In or Join Us to explore the account pages. Forms validate your input locally; accounts and purchases are not created.',
+  Help: 'Search for a course, choose a category, or select a course card to see its details, lessons, and reviews. Use Sign In or Join Us to explore the account pages. Forms validate your input locally; accounts and purchases are not created.',
   About:
     'ByteSpace brings learners and creators together to discover new skills. This frontend preview recreates the supplied ByteSpace design, including its sample courses and community stories.',
   'Privacy Policy':
-    'This preview does not send your form entries to a server, save passwords, or use analytics. Search and category choices last only while this page is open. Vercel serves the website and may process standard request information under its own privacy policy.',
+    'Account and newsletter fields are validated locally without sending or saving their contents. Search-page query and filter choices appear in the page URL so results can be shared and revisited. Vercel serves the website and may process standard request information under its own privacy policy.',
   'Terms of Service':
     'This website is an assessment preview. Courses, ratings, prices, and testimonials are sample content from the supplied design. Real enrollment, account creation, and purchases are not available.',
   'Cookies Settings':
@@ -20,7 +20,7 @@ const information: Record<string, string> = {
 export default function Footer({
   onCategory,
 }: {
-  onCategory: (name: string) => void
+  onCategory?: (name: string) => void
 }) {
   const [notice, setNotice] = useState('')
   const [info, setInfo] = useState<string | null>(null)
@@ -76,17 +76,30 @@ export default function Footer({
           </div>
           <nav className="footer-links" aria-label="Footer navigation">
             <div>
-              <a href="#courses">Featured Courses</a>
-              <a href="#categories">Featured Categories</a>
+              <a href="/search">Featured Courses</a>
+              <a href="/#categories">Featured Categories</a>
               {['Business', 'IT', 'Design'].map((name) => (
-                <button
+                <a
                   key={name}
-                  onClick={() =>
-                    onCategory(name === 'IT' ? 'IT & Software' : name)
+                  href={`/search?category=${encodeURIComponent(name === 'IT' ? 'IT & Software' : name)}`}
+                  onClick={
+                    onCategory
+                      ? (event) => {
+                          if (
+                            event.metaKey ||
+                            event.ctrlKey ||
+                            event.shiftKey ||
+                            event.altKey
+                          )
+                            return
+                          event.preventDefault()
+                          onCategory(name === 'IT' ? 'IT & Software' : name)
+                        }
+                      : undefined
                   }
                 >
                   {name}
-                </button>
+                </a>
               ))}
             </div>
             <div>
@@ -97,13 +110,31 @@ export default function Footer({
                 'Finance',
                 'Sport',
               ].map((name) => (
-                <button key={name} onClick={() => onCategory(name)}>
+                <a
+                  key={name}
+                  href={`/search?category=${encodeURIComponent(name)}`}
+                  onClick={
+                    onCategory
+                      ? (event) => {
+                          if (
+                            event.metaKey ||
+                            event.ctrlKey ||
+                            event.shiftKey ||
+                            event.altKey
+                          )
+                            return
+                          event.preventDefault()
+                          onCategory(name)
+                        }
+                      : undefined
+                  }
+                >
                   {name}
-                </button>
+                </a>
               ))}
             </div>
             <div>
-              <a href="#creators">Become a Creator</a>
+              <a href="/#creators">Become a Creator</a>
               {['Affiliate Program', 'Contact', 'Help', 'About'].map((name) => (
                 <button key={name} onClick={() => setInfo(name)}>
                   {name}
