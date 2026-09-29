@@ -1,0 +1,116 @@
+.not-found-page {
+  position: relative;
+  min-height: 957px;
+  color: #fff;
+  background-image: none;
+}
+
+.not-found-page::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 12%) 2px, transparent 2px),
+    linear-gradient(to bottom, transparent 118px, rgb(255 255 255 / 12%) 118px);
+  background-size: 120px 120px;
+  pointer-events: none;
+  content: '';
+}
+
+.not-found-content {
+  position: relative;
+  padding-top: 394px;
+  padding-bottom: 125px;
+  text-align: center;
+}
+
+.not-found-number {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  width: 920px;
+  height: auto;
+  max-width: 100%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.not-found-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.not-found-copy h1 {
+  color: #fff;
+  font-size: 72px;
+  line-height: 86px;
+}
+
+.not-found-copy p {
+  margin-top: 40px;
+  color: #e5e6e8;
+  font-size: 18px;
+  line-height: 29px;
+}
+
+.not-found-copy .button {
+  margin-top: 31px;
+}
+
+@media (max-width: 1199px) {
+  .not-found-page {
+    min-height: 850px;
+  }
+
+  .not-found-content {
+    padding-top: 355px;
+    padding-bottom: 100px;
+  }
+
+  .not-found-number {
+    top: 45px;
+    width: min(920px, 88vw);
+  }
+
+  .not-found-copy h1 {
+    font-size: clamp(44px, 5.2vw, 64px);
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 767px) {
+  .not-found-page {
+    min-height: 0;
+  }
+
+  .not-found-content {
+    padding-top: clamp(170px, 38vw, 285px);
+    padding-bottom: 80px;
+  }
+
+  .not-found-number {
+    top: 35px;
+    width: 95%;
+  }
+
+  .not-found-copy h1 {
+    font-size: clamp(30px, 6vw, 44px);
+    line-height: 1.25;
+  }
+
+  .not-found-copy h1 br {
+    display: none;
+  }
+
+  .not-found-copy p {
+    max-width: 460px;
+    margin: 28px auto 0;
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .not-found-copy .button {
+    margin-top: 28px;
+  }
+}
